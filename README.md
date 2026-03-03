@@ -49,6 +49,18 @@ omnictl apply -f machine-class.yaml
 omnictl cluster template sync -f cluster.yaml
 ```
 
+## Install Cilium
+
+The default CNI is disabled. After the cluster is up, install Cilium via Helm:
+
+```bash
+helm repo add cilium https://helm.cilium.io/
+helm repo update
+helm install cilium cilium/cilium --namespace kube-system
+```
+
+The node will remain `NotReady` until Cilium is installed.
+
 ## Customizing
 
 - Adjust CPU, memory, and disk sizes in `machine-class.yaml`
