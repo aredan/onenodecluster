@@ -1,0 +1,24 @@
+kind: Cluster
+name: home-onc-01
+talos:
+  version: v1.12.4
+kubernetes:
+  version: v1.34.5
+patches:
+  - name: allow-scheduling-on-controlplanes
+    file: patches/allow-scheduling-on-controlplanes.yaml
+  - name: disable-default-cni
+    file: patches/disable-default-cni.yaml
+---
+kind: ControlPlane
+machineClass:
+  name: incus-single-node
+  size: 1
+patches:
+  - name: machine-extra-disk
+    file: patches/machine-extra-disk.yaml
+---
+kind: Workers
+machineClass:
+  name: incus-single-node
+  size: 0
