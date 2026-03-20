@@ -1,18 +1,20 @@
-apiVersion: infrastructure.omni.siderolabs.io/v1alpha1
-kind: MachineClass
 metadata:
-  name: incus-single-node
+    namespace: default
+    type: MachineClasses.omni.sidero.dev
+    id: one-node-cluster
 spec:
-  type: auto-provision
-  provider: incus
-  config:
-    type: virtual-machine
-    cpu: 4
-    memory: 8192
-    diskSize: 40
-    imageAlias: talos
-    additionalDisks:
-      - pool: default
-        size: 100GiB
-    profiles:
-      - default
+    matchlabels: []
+    autoprovision:
+        providerid: Incus-Z2
+        kernelargs: []
+        metavalues: []
+        providerdata: |
+            cpu: 4
+            memory: 8192
+            diskSize: 40
+            profiles:
+              - vlan10
+            additionalDisks:
+              - pool: nvme1n1-pool-btrfs
+                size: 100GiB
+        grpctunnel: 0

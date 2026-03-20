@@ -56,7 +56,10 @@ The default CNI is disabled. After the cluster is up, install Cilium via Helm:
 ```bash
 helm repo add cilium https://helm.cilium.io/
 helm repo update
-helm install cilium cilium/cilium --namespace kube-system
+cd cilium/
+helm upgrade --install cilium cilium/cilium \
+  --namespace kube-system \
+  -f values.yaml
 ```
 
 The node will remain `NotReady` until Cilium is installed.

@@ -1,0 +1,42 @@
+# values.yaml for Cilium on Talos Linux
+ipam:
+  mode: kubernetes
+
+# Talos already mounts cgroups at /sys/fs/cgroup
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+# Required for Talos compatibility
+securityContext:
+  privileged: true
+  capabilities:
+    # SYS_MODULE is often forbidden on Talos; removing it prevents "unable to apply caps"
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+
+# Use Talos KubePrism for the API server endpoint
+k8sServiceHost: localhost
+k8sServicePort: 7445
+
+# Recommended: Cilium replaces kube-proxy entirely
+kubeProxyReplacement: true
+
+# Revert to legacy routing if you experience DNS issues on Talos 1.16+
+bpf:
+  hostLegacyRouting: true

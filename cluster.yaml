@@ -12,7 +12,7 @@ patches:
 ---
 kind: ControlPlane
 machineClass:
-  name: incus-single-node
+  name: one-node-cluster
   size: 1
 patches:
   - name: machine-extra-disk
@@ -20,5 +20,5 @@ patches:
 ---
 kind: Workers
 machineClass:
-  name: incus-single-node
+  name: one-node-cluster
   size: 0
